@@ -31,4 +31,4 @@ const SnapLine = ({snapLines}) => {
     );
 };
 
-export {SnapLine};
+export default SnapLine;

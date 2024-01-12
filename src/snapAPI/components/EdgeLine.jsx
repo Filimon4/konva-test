@@ -27,4 +27,4 @@ const EdgeLine = ({edgePos}) => {
     );
 };
 
-export {EdgeLine};
+export default EdgeLine;

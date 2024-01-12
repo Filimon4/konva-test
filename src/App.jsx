@@ -10,10 +10,10 @@ import {
     getStageLines,
 } from "./snapAPI";
 import { CLOSESTSNAP, EDGELINE, SNAPLINE, STAGELINE } from './snapAPI'
-import StageLine from './snapAPI'
-import EdgeLine from './snapAPI'
-import SnapLine from './snapAPI'
-import SnapClosest from './snapAPI'
+import StageLine from './snapAPI/components/StageLine'
+import EdgeLine from './snapAPI/components/EdgeLine'
+import SnapLine from './snapAPI/components/SnapLine'
+import SnapClosest from './snapAPI/components/SnapClosest'
 
 const App = () => {
     const [shapes, setShapes] = useState([]);

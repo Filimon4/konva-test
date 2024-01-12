@@ -21,4 +21,4 @@ const SnapClosest = ({snapClosest}) => {
     );
 };
 
-export {SnapClosest};
+export default SnapClosest;

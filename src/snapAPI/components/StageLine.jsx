@@ -27,4 +27,4 @@ const SageLine = ({ stageLines }) => {
     );
 };
 
-export {SageLine};
+export default SageLine;

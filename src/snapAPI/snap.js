@@ -121,32 +121,3 @@ export const getClosesLine = (snapLines) => {
 
     return closetsLines;
 }
-
-export const onMove = (target, stage, layer) => {
-    //find possible snap line
-    const allBounds = getStageLines(target, stage.current.attrs, layer.current.children)
-    //find snap edges of selected shape
-    const shapeEdges = getShapeEdgesLines(target)
-    //find all snap lines
-    const allSnapLines = getSnapLines(allBounds, shapeEdges)
-    //find closest snap line
-    const closestSnap = getClosesLine(allSnapLines)
-
-    if (allSnapLines === 0) {
-        return;
-    }
-
-    let absPos = target.absolutePosition();
-    // Find new position
-    if (closestSnap.length > 0) {
-        closestSnap.forEach((l) => {
-            const position = l.bound + l.offset;
-            if (l.orientation === "V") {
-                absPos = { ...absPos, y: position };
-            } else if (l.orientation === "H") {
-                absPos = { ...absPos, x: position };
-            }
-        });
-        target.setAbsolutePosition(absPos);
-    }
-}
