@@ -9,11 +9,12 @@ import {
     getSnapLines,
     getStageLines,
 } from "./snapAPI";
-import { CLOSESTSNAP, EDGELINE, SNAPLINE, STAGELINE } from './snapAPI'
-import StageLine from './snapAPI/components/StageLine'
-import EdgeLine from './snapAPI/components/EdgeLine'
-import SnapLine from './snapAPI/components/SnapLine'
-import SnapClosest from './snapAPI/components/SnapClosest'
+import { CLOSESTSNAP, EDGELINE, SNAPLINE, STAGELINE } from "./snapAPI";
+import StageLine from "./snapAPI/components/StageLine";
+import EdgeLine from "./snapAPI/components/EdgeLine";
+import SnapLine from "./snapAPI/components/SnapLine";
+import SnapClosest from "./snapAPI/components/SnapClosest";
+import { setCollition, checkCollisions } from "./collisionAPI/collision";
 
 const App = () => {
     const [shapes, setShapes] = useState([]);
@@ -95,9 +96,13 @@ const App = () => {
                 >
                     <Layer
                         ref={layer}
-                        onDragMove={onDragMove}
-                        onDragEnd={() => {
+                        onDragMove={(e) => {
+                            onDragMove(e);
+                            checkCollisions(e, layer);
+                        }}
+                        onDragEnd={(e) => {
                             setSnapClosest([]);
+                            setCollition(e, layer)
                         }}
                     >
                         {SHAPES.map(({ shape: Shape, ...props }) => (
