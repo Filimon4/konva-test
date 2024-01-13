@@ -1,9 +1,9 @@
 function haveIntersection(r1, r2) {
     return !(
-        r2.x > r1.x + r1.width ||
-        r2.x + r2.width < r1.x ||
-        r2.y > r1.y + r1.height ||
-        r2.y + r2.height < r1.y
+        r2.x > r1.x + r1.width-2 ||
+        r2.x + r2.width-2 < r1.x ||
+        r2.y > r1.y + r1.height-2 ||
+        r2.y + r2.height-2 < r1.y
     );
 }
 export const setCollition = (e, layer) => {
