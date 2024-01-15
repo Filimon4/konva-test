@@ -1,4 +1,3 @@
-import { Rect } from "react-konva"
 
 export const SNAP_LINE_STYLE = {
     stroke: "red",
