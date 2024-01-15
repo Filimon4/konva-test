@@ -16,6 +16,7 @@ import SnapLine from "./snapAPI/components/SnapLine";
 import SnapClosest from "./snapAPI/components/SnapClosest";
 import { setCollition, checkCollisions } from "./collisionAPI/collision";
 import Rectangle from "./components/Rectangle";
+import Arrow from './components/Arrow'
 
 const App = () => {
     const [shapes, setShapes] = useState([]);
@@ -114,6 +115,7 @@ const App = () => {
                                 ref={shapeDrag}
                             />
                         ))}
+                        <Arrow />
                         {STAGELINE && <StageLine stageLines={stageLines} />}
                         {EDGELINE && <EdgeLine edgePos={edgePos} />}
                         {SNAPLINE && <SnapLine snapLines={snapLines} />}

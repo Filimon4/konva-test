@@ -12,19 +12,17 @@ export const setCollition = (e, layer) => {
     target.opacity(1)
     target.zIndex(4)
     let children = layer.current.children;
-    children = children.filter(child => {
-        const name = child.attrs.name;
-        return name === 'settings' ? false : true;
-    })
-    children.forEach(element => {
-        if (element !== target) {
-            if (haveIntersection(targetRect, element.getClientRect())) {
-                element.opacity(0.2)
-            } else {
-                element.opacity(1)
+    if (children.find(elem => elem.attrs.id && target.attrs.name !== "settings")) {
+        children.forEach(element => {
+            if (element !== target) {
+                if (haveIntersection(targetRect, element.getClientRect())) {
+                    element.opacity(0.2)
+                } else {
+                    element.opacity(1)
+                }
             }
-        }
-    });
+        });
+    }
 }
 
 export const checkCollisions = (e, layer) => {
@@ -32,14 +30,16 @@ export const checkCollisions = (e, layer) => {
     const targetRect = e.target.getClientRect();
     target.opacity(1)
     target.zIndex(4)
-    layer.current.children.forEach(element => {
-        const name = element.attrs.name || null;
-        if (element !== target && name !== "settings") {
-            if (haveIntersection(targetRect, element.getClientRect())) {
-                element.opacity(0.2)
-            } else {
-                element.opacity(1)
+    let children = layer.current.children;
+    if (children.find(elem => elem.attrs.id && target.attrs.name !== "settings")) {
+        children.forEach(element => {
+            if (element !== target) {
+                if (haveIntersection(targetRect, element.getClientRect())) {
+                    element.opacity(0.2)
+                } else {
+                    element.opacity(1)
+                }
             }
-        }
-    });
+        });
+    }
 }
