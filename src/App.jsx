@@ -15,6 +15,7 @@ import EdgeLine from "./snapAPI/components/EdgeLine";
 import SnapLine from "./snapAPI/components/SnapLine";
 import SnapClosest from "./snapAPI/components/SnapClosest";
 import { setCollition, checkCollisions } from "./collisionAPI/collision";
+import Rectangle from "./components/Rectangle";
 
 const App = () => {
     const [shapes, setShapes] = useState([]);
@@ -46,6 +47,7 @@ const App = () => {
         setStageLines(allBounds);
         //find snap edges of selected shape
         const shapeEdges = getShapeEdgesLines(target);
+        if(shapeEdges == null) return;
         setEdgePos(shapeEdges);
         //find all snap lines
         const snapLines = getSnapLines(allBounds, shapeEdges);
@@ -96,20 +98,18 @@ const App = () => {
                 >
                     <Layer
                         ref={layer}
-                        onDragMove={(e) => {
-                            onDragMove(e);
-                            checkCollisions(e, layer);
-                        }}
-                        onDragEnd={(e) => {
-                            setSnapClosest([]);
-                            setCollition(e, layer)
-                        }}
+                        // onDragMove={(e) => {
+                        //     onDragMove(e);
+                        //     checkCollisions(e, layer);
+                        // }}
+                        // onDragEnd={(e) => {
+                        //     setSnapClosest([]);
+                        //     setCollition(e, layer)
+                        // }}
                     >
-                        {SHAPES.map(({ shape: Shape, ...props }) => (
-                            <Shape
-                                draggable
+                        {SHAPES.map(({...props }) => (
+                            <Rectangle
                                 key={props.id}
-                                name="shape"
                                 {...props}
                                 ref={shapeDrag}
                             />

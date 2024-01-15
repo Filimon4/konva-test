@@ -11,7 +11,12 @@ export const setCollition = (e, layer) => {
     const targetRect = e.target.getClientRect();
     target.opacity(1)
     target.zIndex(4)
-    layer.current.children.forEach(element => {
+    let children = layer.current.children;
+    children = children.filter(child => {
+        const name = child.attrs.name;
+        return name === 'settings' ? false : true;
+    })
+    children.forEach(element => {
         if (element !== target) {
             if (haveIntersection(targetRect, element.getClientRect())) {
                 element.opacity(0.2)
@@ -28,7 +33,8 @@ export const checkCollisions = (e, layer) => {
     target.opacity(1)
     target.zIndex(4)
     layer.current.children.forEach(element => {
-        if (element !== target) {
+        const name = element.attrs.name || null;
+        if (element !== target && name !== "settings") {
             if (haveIntersection(targetRect, element.getClientRect())) {
                 element.opacity(0.2)
             } else {

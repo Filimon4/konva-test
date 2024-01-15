@@ -1,14 +1,17 @@
-import { Rect } from "react-konva"
+import Rectangle from "./components/Rectangle"
 
-export const rectUtil = ({ x, y }, width, height) => {
+export const rectUtil = ({x, y}, width, height) => {
+    const props = {
+        x,
+        y,
+        width,
+        height,
+        fill: 'red'
+    }
     return (
-        <Rect
-            fill='red'
-            x={x - width / 2}
-            y={y - height / 2}
-            width={width}
-            height={height}
-            draggable
+        <Rectangle
+            key={props.id}
+            {...props}
         />
     )
 }

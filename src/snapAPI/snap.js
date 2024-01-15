@@ -6,12 +6,15 @@ export const getStageLines = (target, {width, height}, objects) => {
 
 
     objects.forEach(element => {
-        const { x, y, width, height } = element.attrs
-
-        if ((x && y) && element !== target) {
-            vertical.push([y, y + height / 2, y + height])
-            horizontal.push([x, x + width / 2, x + width])
+        const { x, y, width, height, name } = element.attrs
+        
+        if (name !== 'settings') {
+            if ((x && y) && element !== target) {
+                vertical.push([y, y + height / 2, y + height])
+                horizontal.push([x, x + width / 2, x + width])
+            }
         }
+            
     });
     return {
         vertical: vertical.flat(),
@@ -20,6 +23,7 @@ export const getStageLines = (target, {width, height}, objects) => {
 }
 
 export const getShapeEdgesLines = (target) => {
+    if (target.attrs.name === 'settings') return null;
     const shape = target.getClientRect()
     const absPos = target.absolutePosition()
 

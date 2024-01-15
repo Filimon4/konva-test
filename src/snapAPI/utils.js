@@ -31,7 +31,6 @@ export const SHAPES = [
         height: 100,
         width: 100,
         fill: "pink",
-        shape: Rect
     },
     {
         id: '2',
@@ -40,6 +39,5 @@ export const SHAPES = [
         height: 100,
         width: 100,
         fill: "brown",
-        shape: Rect
     }
 ];
