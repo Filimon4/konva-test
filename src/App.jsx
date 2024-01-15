@@ -98,14 +98,14 @@ const App = () => {
                 >
                     <Layer
                         ref={layer}
-                        // onDragMove={(e) => {
-                        //     onDragMove(e);
-                        //     checkCollisions(e, layer);
-                        // }}
-                        // onDragEnd={(e) => {
-                        //     setSnapClosest([]);
-                        //     setCollition(e, layer)
-                        // }}
+                        onDragMove={(e) => {
+                            onDragMove(e);
+                            checkCollisions(e, layer);
+                        }}
+                        onDragEnd={(e) => {
+                            setSnapClosest([]);
+                            setCollition(e, layer)
+                        }}
                     >
                         {SHAPES.map(({...props }) => (
                             <Rectangle
