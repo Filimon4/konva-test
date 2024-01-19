@@ -3,10 +3,32 @@ import { Arrow, Circle } from "react-konva";
 
 const ArrowLine = ({firstObject, secondObject}) => {
     const arrow = useRef()
-    const [start, setStart] = useState({x: 0, y: 0})
-    const [end, setEnd] = useState({x: 100, y: 100})
-    // change to refStart and refEnd
-    // the arrow will be rendiring from the refStart to refEnd
+    const startRef = useRef()
+    const endRef = useRef()
+    const [start, setStart] = useState({x: 100, y: 100})
+    const [end, setEnd] = useState({x: 200, y: 100})
+    
+    const findSnap = (target, layer) => {
+        let snaps = []
+        const targetCords = target.getClientRect()
+        layer.children.forEach((child, i) => {
+            if (child.getAttr('arrowSnap') === true) {
+                const cords = child.getClientRect()
+                const a = targetCords.x - cords.x
+                const b = targetCords.y - cords.y
+                const dist = Math.sqrt(a*a + b*b)
+                if (dist < 80) {
+                    snaps.push([child, dist])
+                }
+            }
+        })
+        if (snaps.length > 0) {
+            snaps = snaps.sort((a,b) => a[1] - b[1])
+            console.log(snaps[0])
+            return snaps[0][0]
+        }
+        return null
+    }
 
     return (
         <>
@@ -26,30 +48,16 @@ const ArrowLine = ({firstObject, secondObject}) => {
                 draggable
                 name="settings"
                 fill="gray"
+                ref={startRef}
                 onDragMove={(e) => {
-                    const root = e.target
-                    let absPos = root.getAbsolutePosition()
-                    const target = e.target.getClientRect()
+                    let absPos = e.target.getAbsolutePosition()
                     const layer = e.target.getParent()
-                    const nearest = []
-                    layer.children.forEach(child => {
-                        if (child.className === 'Rect') {
-                            const posChild = child.getClientRect()
-                            const a = target.x - posChild.x
-                            const b = target.y - posChild.y
-                            if (Math.sqrt( a*a + b*b ) < 90) {
-                                nearest.push({child: child, dist: Math.sqrt( a*a + b*b ), x: posChild.x, y: posChild.y})
-                            }
-                        }
-                    })
-                    const near = nearest.sort((a, b) => a.dist - b.dist)[0]
-
-                    if (near) {
-                        absPos = {...absPos, x: near.x, y: near.y}
-                        console.log([absPos.x, absPos.y,  ...arrow.current.getPoints().slice(2,4)])
-                        arrow.current.setPoints([absPos.x, absPos.y,  ...arrow.current.getPoints().slice(2,4)]) 
-                    } else {
-                        setStart({x: target.x, y: target.y})
+                    const snap = findSnap(e.target, layer)
+                    console.log(snap)
+                    if (snap) {
+                        const target = snap.getClientRect()
+                        absPos = {...absPos, x: target.x+(e.target.getClientRect().width/4) , y: target.y + (e.target.getClientRect().height/4)}
+                        e.target.setAbsolutePosition(absPos)
                     }
                 }}
             />
@@ -60,9 +68,17 @@ const ArrowLine = ({firstObject, secondObject}) => {
                 draggable
                 name="settings"
                 fill="gray"
+                ref={endRef}
                 onDragMove={(e) => {
-                    const target = e.target.getClientRect()
-                    setEnd({x: target.x, y: target.y})
+                    let absPos = e.target.getAbsolutePosition()
+                    const layer = e.target.getParent()
+                    const snap = findSnap(e.target, layer)
+                    console.log(snap)
+                    if (snap) {
+                        const target = snap.getClientRect()
+                        absPos = {...absPos, x: target.x+(e.target.getClientRect().width/4) , y: target.y + (e.target.getClientRect().height/4)}
+                        e.target.setAbsolutePosition(absPos)
+                    }
                 }}
             />
         </>

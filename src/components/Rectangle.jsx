@@ -10,6 +10,21 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
         bottomLeft: { x: x, y: y + height },
         bottomRight: { x: x + width, y: y + height },
     });
+    const dividers =
+    [
+        [cords.topLeft.x + Math.abs(cords.topLeft.x - cords.topRight.x) / 2, cords.topLeft.y],
+        [cords.topLeft.x + Math.abs(cords.topLeft.x - cords.topRight.x) / 4, cords.topLeft.y],
+        [cords.topRight.x - Math.abs(cords.topLeft.x - cords.topRight.x) / (4), cords.topLeft.y],
+        [cords.topLeft.x, cords.topLeft.y + Math.abs(cords.topLeft.y - cords.bottomLeft.y)/4],
+        [cords.topLeft.x, cords.topLeft.y + Math.abs(cords.topLeft.y - cords.bottomLeft.y)/2],
+        [cords.topLeft.x, cords.bottomLeft.y - Math.abs(cords.topLeft.y - cords.bottomLeft.y)/4],
+        [cords.bottomLeft.x + Math.abs(cords.bottomLeft.x - cords.topRight.x)/4, cords.bottomLeft.y],
+        [cords.bottomLeft.x + Math.abs(cords.bottomLeft.x - cords.topRight.x)/2, cords.bottomLeft.y],
+        [cords.bottomRight.x - Math.abs(cords.bottomLeft.x - cords.topRight.x)/4, cords.bottomLeft.y],
+        [cords.topRight.x, cords.topRight.y + Math.abs(cords.topRight.y - cords.bottomRight.y)/4],
+        [cords.topRight.x, cords.topRight.y + Math.abs(cords.topRight.y - cords.bottomRight.y)/2],
+        [cords.topRight.x, cords.bottomRight.y - Math.abs(cords.topRight.y - cords.bottomRight.y)/4],
+    ]
 
     const updateRect = (e) => {
         const target = e.currentTarget.getClientRect();
@@ -53,6 +68,21 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                     setEdit(!edit)
                 }}
             />
+            {edit && <>
+                {[0,1,2,3,4,5,6,7,8,9,10,11].map((value, index) => {
+                    return (<>
+                        <Circle 
+                            name="settings"
+                            arrowSnap={true}
+                            x={dividers[index][0]}
+                            y={dividers[index][1]}
+                            radius={4}
+                            fill="rgb(0,200,255)"
+
+                        />
+                    </>)
+                })}
+            </> }
             {edit && (
                 <>
                     <Circle
@@ -69,7 +99,7 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                         onDragMove={(e) => {
                             const posRect = e.target.getClientRect()
                             setCords(pos => ({
-                                topLeft: { x: posRect.x, y: posRect.y },
+                                topLeft: { x: posRect.x+(posRect.width/2), y: posRect.y+(posRect.height/2) },
                                 topRight: { x: pos.topRight.x, y: posRect.y },
                                 bottomLeft: { x: posRect.x, y: pos.bottomLeft.y },
                                 bottomRight: { x: pos.bottomRight.x, y: pos.bottomRight.y},
@@ -92,7 +122,7 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                             const posRect = e.target.getClientRect()
                             setCords(pos => ({
                                 topLeft: { x: pos.topLeft.x, y: posRect.y },
-                                topRight: { x: posRect.x, y: posRect.y },
+                                topRight: { x: posRect.x+(posRect.width/2), y: posRect.y+(posRect.height/2) },
                                 bottomLeft: { x: pos.bottomLeft.x, y: pos.bottomLeft.y },
                                 bottomRight: { x: posRect.x, y: pos.bottomRight.y },
                             }));
@@ -114,7 +144,7 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                             setCords(pos => ({
                                 topLeft: { x: posRect.x, y: pos.topLeft.y },
                                 topRight: { x: pos.topRight.x, y: pos.topRight.y },
-                                bottomLeft: { x: posRect.x, y: posRect.y },
+                                bottomLeft: { x: posRect.x+(posRect.width/2), y: posRect.y+(posRect.height/2) },
                                 bottomRight: { x: pos.bottomRight.x, y: posRect.y },
                             }));
                         }}
@@ -136,7 +166,7 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                                 topLeft: {x: pos.topLeft.x, y: pos.topLeft.y},
                                 topRight: { x: posRect.x, y: pos.topRight.y },
                                 bottomLeft: { x: pos.bottomLeft.x, y: posRect.y },
-                                bottomRight: { x: posRect.x, y: posRect.y },
+                                bottomRight: { x: posRect.x+(posRect.width/2), y: posRect.y+(posRect.height/2) },
                             }));
                         }}
                     />
