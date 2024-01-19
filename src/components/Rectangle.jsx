@@ -68,21 +68,20 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                     setEdit(!edit)
                 }}
             />
-            {edit && <>
-                {[0,1,2,3,4,5,6,7,8,9,10,11].map((value, index) => {
-                    return (<>
-                        <Circle 
-                            name="settings"
-                            arrowSnap={true}
-                            x={dividers[index][0]}
-                            y={dividers[index][1]}
-                            radius={4}
-                            fill="rgb(0,200,255)"
+            {dividers.map((value, index) => {
+                return (<>
+                    <Circle
+                        visible={edit}
+                        name="settings"
+                        arrowSnap={true}
+                        x={value[0]}
+                        y={value[1]}
+                        radius={4}
+                        fill="rgb(0,200,255)"
 
-                        />
-                    </>)
-                })}
-            </> }
+                    />
+                </>)
+            })}
             {edit && (
                 <>
                     <Circle
