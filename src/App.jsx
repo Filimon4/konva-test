@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Stage, Layer } from "react-konva";
 import cubeImg from "./assets/cube.png";
 import { rectUtil } from "./utils";
-import { SHAPES } from "./snapAPI";
+import { SHAPES } from "./utils";
 import {
     getClosesLine,
     getShapeEdgesLines,
@@ -17,6 +17,7 @@ import SnapClosest from "./snapAPI/components/SnapClosest";
 import { setCollition, checkCollisions } from "./collisionAPI/collision";
 import Rectangle from "./components/Rectangle";
 import Arrow from './components/Arrow'
+import Cycle from "./components/Cycle";
 
 const App = () => {
     const [shapes, setShapes] = useState([]);
@@ -101,11 +102,11 @@ const App = () => {
                         ref={layer}
                         onDragMove={(e) => {
                             onDragMove(e);
-                            checkCollisions(e, layer);
+                            // checkCollisions(e, layer);
                         }}
                         onDragEnd={(e) => {
                             setSnapClosest([]);
-                            setCollition(e, layer)
+                            // setCollition(e, layer)
                         }}
                     >
                         {SHAPES.map(({...props }) => (
@@ -123,6 +124,8 @@ const App = () => {
                             <SnapClosest snapClosest={snapClosest} />
                         )}
                         {shapes.map((shape) => shape)}
+                        <Cycle />
+                        <Cycle />
                     </Layer>
                 </Stage>
             </div>

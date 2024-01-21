@@ -99,8 +99,8 @@ const Rectangle = ({ width, height, x, y, ...props }) => {
                             const posRect = e.target.getClientRect()
                             setCords(pos => ({
                                 topLeft: { x: posRect.x+(posRect.width/2), y: posRect.y+(posRect.height/2) },
-                                topRight: { x: pos.topRight.x, y: posRect.y },
-                                bottomLeft: { x: posRect.x, y: pos.bottomLeft.y },
+                                topRight: { x: pos.topRight.x, y: posRect.y+(posRect.height/2) },
+                                bottomLeft: { x: posRect.x+(posRect.width/2), y: pos.bottomLeft.y },
                                 bottomRight: { x: pos.bottomRight.x, y: pos.bottomRight.y},
                             }));
                         }}
